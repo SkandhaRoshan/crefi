@@ -48,10 +48,6 @@ graph TD
     end
     
     Rebalance --> Vault
-    
-    style User fill:#f9f,stroke:#333,stroke-width:2px
-    style Vault fill:#dfd,stroke:#333,stroke-width:2px
-    style Automation fill:#e1f5fe,stroke:#01579b,stroke-width:2px
 ```
 
 ---
@@ -102,12 +98,6 @@ graph LR
     Fetch --> Evaluate[Evaluate Strategy APYs]
     Evaluate --> Select[Select Best Strategy]
     Select --> Trigger[Trigger Vault Rebalance]
-    
-    style Cron fill:#f96,stroke:#333,stroke-width:2px
-    style Fetch fill:#bbf,stroke:#333,stroke-width:2px
-    style Evaluate fill:#9cf,stroke:#333,stroke-width:2px
-    style Select fill:#9f6,stroke:#333,stroke-width:2px
-    style Trigger fill:#f6f,stroke:#333,stroke-width:2px
 ```
 
 ---
