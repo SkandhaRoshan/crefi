@@ -34,31 +34,25 @@ This creates a **self-optimizing DeFi vault**.
 
 # Architecture
 
-
-User
-│
-▼
-Vault Contract
-│
-▼
-Strategy Router
-│
-├── Aave Strategy
-└── Idle Strategy
-
-Automation Layer
-
-Chainlink CRE Workflow
-│
-▼
-External Data API
-│
-▼
-Strategy Evaluation
-│
-▼
-Vault Rebalance
-
+```mermaid
+graph TD
+    User[User] --> Vault[Vault Contract]
+    Vault --> Router[Strategy Router]
+    Router --> Aave[Aave Strategy]
+    Router --> Idle[Idle Strategy]
+    
+    subgraph Automation [Automation Layer]
+        CRE[Chainlink CRE Workflow] --> API[External Data API]
+        API --> Eval[Strategy Evaluation]
+        Eval --> Rebalance[Vault Rebalance]
+    end
+    
+    Rebalance --> Vault
+    
+    style User fill:#f9f,stroke:#333,stroke-width:2px
+    style Vault fill:#dfd,stroke:#333,stroke-width:2px
+    style Automation fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+```
 
 ---
 
@@ -68,11 +62,13 @@ Vault Rebalance
 
 The smart contract layer defines the on-chain vault system.
 
+```
 contracts/
-
-Vault.sol → manages user deposits  
-Router.sol → selects strategy  
-Strategy.sol → executes yield strategies  
+│
+├── Vault.sol → manages user deposits  
+├── Router.sol → selects strategy  
+└── Strategy.sol → executes yield strategies  
+```
 
 These contracts interact with the CRE workflow to perform automated rebalancing.
 
@@ -84,7 +80,9 @@ The automation layer is implemented using a Chainlink CRE workflow.
 
 Location:
 
+```
 my-workflow/main.ts
+```
 
 The workflow performs:
 
@@ -98,21 +96,19 @@ The workflow performs:
 
 # Workflow Execution
 
-
-CRE Cron Trigger
-│
-▼
-Fetch External Data (API)
-│
-▼
-Evaluate Strategy APYs
-│
-▼
-Select Best Strategy
-│
-▼
-Trigger Vault Rebalance
-
+```mermaid
+graph LR
+    Cron[CRE Cron Trigger] --> Fetch[Fetch External Data API]
+    Fetch --> Evaluate[Evaluate Strategy APYs]
+    Evaluate --> Select[Select Best Strategy]
+    Select --> Trigger[Trigger Vault Rebalance]
+    
+    style Cron fill:#f96,stroke:#333,stroke-width:2px
+    style Fetch fill:#bbf,stroke:#333,stroke-width:2px
+    style Evaluate fill:#9cf,stroke:#333,stroke-width:2px
+    style Select fill:#9f6,stroke:#333,stroke-width:2px
+    style Trigger fill:#f6f,stroke:#333,stroke-width:2px
+```
 
 ---
 
@@ -129,11 +125,13 @@ CRE provides:
 
 Chainlink components used in this project:
 
+```
 Chainlink CRE Workflow  
 my-workflow/main.ts
 
 Workflow Configuration  
 my-workflow/workflow.yaml
+```
 
 ---
 
@@ -141,13 +139,13 @@ my-workflow/workflow.yaml
 
 Running a CRE workflow simulation:
 
-
+```bash
 cre workflow simulate my-workflow
-
+```
 
 Example output:
 
-
+```
 🚀 CRE Autopilot started
 Vault Assets: 1000000
 
@@ -157,7 +155,7 @@ Idle APY: 3
 Chosen Strategy: Aave
 
 📈 Rebalance Triggered
-
+```
 
 This demonstrates autonomous strategy selection.
 
@@ -165,20 +163,20 @@ This demonstrates autonomous strategy selection.
 
 # Project Structure
 
-
+```
 crefi/
 │
 ├── contracts/
-│ ├── Vault.sol
-│ ├── Router.sol
-│ └── Strategy.sol
+│   ├── Vault.sol
+│   ├── Router.sol
+│   └── Strategy.sol
 │
 ├── my-workflow/
-│ ├── main.ts
-│ └── workflow.yaml
+│   ├── main.ts
+│   └── workflow.yaml
 │
 └── README.md
-
+```
 
 ---
 
@@ -186,21 +184,21 @@ crefi/
 
 Install dependencies.
 
-
+```bash
 npm install
-
+```
 
 Navigate to workflow folder:
 
-
+```bash
 cd my-workflow
-
+```
 
 Run workflow simulation:
 
-
+```bash
 cre workflow simulate my-workflow
-
+```
 
 ---
 
