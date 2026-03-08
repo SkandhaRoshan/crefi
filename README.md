@@ -1,46 +1,40 @@
 # CREFi — Autonomous DeFi Vault using Chainlink CRE
 
-CREFi is an autonomous DeFi vault powered by Chainlink CRE (Chainlink Runtime Environment).  
+CREFi is an autonomous DeFi vault powered by Chainlink CRE (Chainlink Runtime Environment).
+
 It automatically evaluates yield strategies and decides when to rebalance funds between DeFi protocols.
 
-This project was built for a Chainlink hackathon to demonstrate how CRE can orchestrate intelligent offchain automation that interacts with onchain systems.
+This project demonstrates how Chainlink CRE can orchestrate intelligent off-chain automation that interacts with on-chain DeFi systems.
 
 ---
 
-# Overview
+# Problem
 
-Managing DeFi strategies manually is inefficient and risky.
+Managing DeFi strategies manually is inefficient.
 
 Users constantly need to:
-- monitor yield opportunities
-- compare APYs across protocols
-- withdraw and redeploy capital
 
-CREFi automates this entire process.
+• monitor yield opportunities  
+• compare APYs across protocols  
+• withdraw and redeploy capital  
 
-A Chainlink CRE workflow continuously evaluates strategy conditions and triggers automated vault actions when better opportunities appear.
+This leads to missed opportunities and inefficient capital allocation.
 
 ---
 
-# How It Works
+# Solution
 
-The system consists of two major parts:
+CREFi automates yield strategy management using a Chainlink CRE workflow.
 
-1. Smart Contracts (Vault Infrastructure)
-2. Chainlink CRE Workflow (Automation Layer)
+The workflow continuously evaluates market conditions and triggers automated vault actions when better strategies are available.
 
-The CRE workflow runs periodically and performs the following steps:
-
-1. Fetch external market data
-2. Evaluate strategy conditions
-3. Decide the optimal strategy
-4. Trigger vault rebalancing
-
-This creates a fully autonomous DeFi vault.
+This creates a **self-optimizing DeFi vault**.
 
 ---
 
 # Architecture
+
+
 User
 │
 ▼
@@ -52,17 +46,15 @@ Strategy Router
 ├── Aave Strategy
 └── Idle Strategy
 
-
-Automation layer:
-
+Automation Layer
 
 Chainlink CRE Workflow
 │
 ▼
-External Data (API)
+External Data API
 │
 ▼
-Strategy Decision
+Strategy Evaluation
 │
 ▼
 Vault Rebalance
@@ -70,56 +62,84 @@ Vault Rebalance
 
 ---
 
-# Chainlink Integration
+# System Components
 
-This project demonstrates how Chainlink CRE can orchestrate DeFi workflows.
+## Smart Contracts
 
-### Chainlink CRE
+The smart contract layer defines the on-chain vault system.
 
-CRE acts as the offchain execution layer that:
+contracts/
 
-- runs automated workflows
-- fetches external data
-- evaluates strategy logic
-- triggers actions onchain
+Vault.sol → manages user deposits  
+Router.sol → selects strategy  
+Strategy.sol → executes yield strategies  
 
-### Automation (Cron Trigger)
-
-The workflow runs automatically based on a schedule.
-
-Example:
-
-
-cron trigger → evaluate market → choose strategy → rebalance vault
-
-
-### External Data
-
-The workflow fetches real market data from an external API.
-
-Example:
-- ETH price from CoinGecko
-
-This demonstrates CRE’s ability to integrate Web2 APIs with Web3 smart contracts.
+These contracts interact with the CRE workflow to perform automated rebalancing.
 
 ---
 
-# Workflow Logic
+## Chainlink CRE Workflow
 
-The CRE workflow performs the following logic:
+The automation layer is implemented using a Chainlink CRE workflow.
 
-1. Start automated cron execution
-2. Fetch ETH price from external API
-3. Evaluate strategy APYs
-4. Compare available strategies
-5. Select best strategy
-6. Trigger vault rebalance if needed
+Location:
+
+my-workflow/main.ts
+
+The workflow performs:
+
+1. Periodic execution via cron trigger  
+2. Fetch external market data  
+3. Evaluate strategy conditions  
+4. Select the optimal yield strategy  
+5. Trigger vault rebalance
+
+---
+
+# Workflow Execution
+
+
+CRE Cron Trigger
+│
+▼
+Fetch External Data (API)
+│
+▼
+Evaluate Strategy APYs
+│
+▼
+Select Best Strategy
+│
+▼
+Trigger Vault Rebalance
+
+
+---
+
+# Chainlink Integration
+
+This project demonstrates the use of **Chainlink CRE** as an off-chain automation layer.
+
+CRE provides:
+
+• workflow execution  
+• external API integration  
+• automated decision logic  
+• secure secret management  
+
+Chainlink components used in this project:
+
+Chainlink CRE Workflow  
+my-workflow/main.ts
+
+Workflow Configuration  
+my-workflow/workflow.yaml
 
 ---
 
 # Example Simulation Output
 
-Running the workflow simulation:
+Running a CRE workflow simulation:
 
 
 cre workflow simulate my-workflow
@@ -130,9 +150,12 @@ Example output:
 
 🚀 CRE Autopilot started
 Vault Assets: 1000000
+
 Aave APY: 9.02
 Idle APY: 3
+
 Chosen Strategy: Aave
+
 📈 Rebalance Triggered
 
 
@@ -151,24 +174,33 @@ crefi/
 │ └── Strategy.sol
 │
 ├── my-workflow/
-│ └── main.ts
+│ ├── main.ts
+│ └── workflow.yaml
 │
 └── README.md
 
 
 ---
 
-# How to Run
+# How To Run
 
-Install CRE CLI.
+Install dependencies.
 
-Then simulate the workflow:
+
+npm install
+
+
+Navigate to workflow folder:
+
+
+cd my-workflow
+
+
+Run workflow simulation:
 
 
 cre workflow simulate my-workflow
 
-
-This runs the automation logic locally.
 
 ---
 
@@ -176,42 +208,30 @@ This runs the automation logic locally.
 
 Demo Video:
 
-(Add your YouTube video here)
+(Add your YouTube video link here)
 
 ---
 
 # Future Improvements
 
-Potential improvements for production deployment:
+Potential improvements:
 
-- integrate live APY data from DeFi APIs
-- add multiple DeFi strategies
-- enable cross-chain vault allocation
-- integrate AI strategy optimization
-
----
-
-# Why This Matters
-
-DeFi is moving toward autonomous financial systems.
-
-CREFi demonstrates how Chainlink CRE can power:
-
-- autonomous vault management
-- automated yield optimization
-- intelligent offchain decision systems
+• integrate real DeFi APY APIs  
+• support additional DeFi protocols  
+• cross-chain vault allocation  
+• AI-based strategy optimization  
 
 ---
 
 # Built With
 
-- Chainlink CRE
-- Solidity
-- TypeScript
-- DeFi Strategy Logic
+• Chainlink CRE  
+• Solidity  
+• TypeScript  
+• DeFi Strategy Logic  
 
 ---
 
 # Hackathon Submission
 
-Built for the Chainlink Hackathon.
+Built for the **Chainlink Convergence Hackathon**.
